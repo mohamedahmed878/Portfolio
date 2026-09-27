@@ -252,6 +252,36 @@
             transform: translateY(-2px);
         }
 
+        /* --- Mobile nav (hamburger) --- */
+        .nav-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(var(--surface-rgb), 0.04);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .nav-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         /* --- 3. الأقسام العامة --- */
         section {
             padding: 140px 20px 80px;
@@ -894,6 +924,81 @@
             margin-top: 45px;
         }
 
+        /* --- 6.4.1 قسم الخدمات (استشارة + كتاب) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.12);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(6, 182, 212, 0.15));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            flex-grow: 1;
+        }
+
+        .service-price {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-price span {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .service-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
         /* --- 6.5. قسم التواصل --- */
         .contact-section {
             min-height: auto;
@@ -967,6 +1072,50 @@
             }
         }
 
+        /* --- 8.1 قائمة الموبايل (Hamburger) --- */
+        @media (max-width: 860px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: min(78vw, 320px);
+                background: rgba(8, 10, 20, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-left: 1px solid var(--border-color);
+                padding: 100px 30px 40px;
+                transition: right 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+                box-shadow: -20px 0 50px rgba(0, 0, 0, 0.4);
+            }
+
+            :root[data-theme='light'] nav {
+                background: rgba(255, 255, 255, 0.98);
+            }
+
+            nav.nav-open {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 28px;
+            }
+
+            nav a {
+                font-size: 1.1rem;
+            }
+
+            .services-grid {
+                gap: 24px;
+            }
+        }
+
         /* --- 9. ضبط دقيق لمقاسات الموبايل --- */
         @media (max-width: 600px) {
             .nav-container {
@@ -990,7 +1139,8 @@
             }
 
             .theme-toggle,
-            .login-icon-btn {
+            .login-icon-btn,
+            .nav-toggle {
                 width: 32px;
                 height: 32px;
                 font-size: 0.8rem;
@@ -1145,6 +1295,19 @@
                 padding: 28px 22px;
             }
 
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .service-card {
+                padding: 28px 22px;
+            }
+
+            .service-price {
+                font-size: 1.5rem;
+            }
+
             .contact-box {
                 padding: 40px 20px;
             }
@@ -1175,10 +1338,11 @@
         <div class="nav-container">
             <a href="#home" class="logo">Mohamed</a>
             <div class="nav-right">
-                <nav>
+                <nav id="main-nav">
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">Skills</a></li>
+                        <li><a href="#projects">برمجي</a></li>
                         <li><a href="https://soalect-store-git-main-tm-6da2d477.vercel.app/" target="_blank">My Store</a></li>
                     </ul>
                 </nav>
@@ -1188,9 +1352,13 @@
                 <a href="/app/login" class="login-icon-btn" title="تسجيل الدخول" aria-label="Login">
                     <i class="fa-solid fa-right-to-bracket"></i>
                 </a>
+                <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
+    <div id="nav-backdrop" class="nav-backdrop"></div>
 
     <!-- Hero section (profile & social links) -->
     <section id="home">
@@ -1350,9 +1518,47 @@
                     <a href="https://task-f8z5.vercel.app/" target="_blank" class="project-link-btn live"><i class="fa-solid fa-up-right-from-square"></i> Live Demo</a>
                 </div>
             </div>
+            <div class="project-card">
+                <div class="project-icon"><i class="fa-solid fa-share-nodes"></i></div>
+                <h3>Social Media App</h3>
+                <p>منصة تواصل اجتماعي (Social Media App) — TODO: اكتب هنا وصف سطر أو اتنين عن المشروع والتقنيات المستخدمة فيه بالظبط.</p>
+                <div class="project-tags">
+                    <span class="project-tag">React</span>
+                    <span class="project-tag">Node.js</span>
+                    <span class="project-tag">MongoDB</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/mohamedahmed878" target="_blank" class="project-link-btn github"><i class="fa-brands fa-github"></i> Code</a>
+                    <a href="https://social-media-orpin-alpha.vercel.app/" target="_blank" class="project-link-btn live"><i class="fa-solid fa-up-right-from-square"></i> Live Demo</a>
+                </div>
+            </div>
         </div>
         <div class="projects-more">
             <a href="https://github.com/mohamedahmed878" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> See All Projects on GitHub</a>
+        </div>
+    </section>
+
+    <!-- Services: consultation + book -->
+    <section id="services">
+        <h2 class="section-title">My <span>Services</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-comments"></i></div>
+                <h3>استشارة برمجية</h3>
+                <p>جلسة استشارة فردية لمساعدتك في مشروعك البرمجي، فكرتك، أو أي مشكلة تقنية بتواجهك.</p>
+                <div class="service-price">250 <span>EGP</span></div>
+                <a href="https://wa.me/201200757959?text=مرحبًا%20محمد%2C%20عايز%20أحجز%20استشارة%20برمجية" target="_blank" class="btn btn-primary service-btn">
+                    <i class="fa-brands fa-whatsapp"></i> احجز استشارتك
+                </a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-book-open"></i></div>
+                <h3>لتغيّر حياتك في 90 يوم</h3>
+                <p>A Transformative Journey in 90 Days — دليلك لتطوير حياتك خطوة بخطوة خلال 90 يوم.</p>
+                <a href="https://a-transformative-journey-in-90-days.vercel.app/" target="_blank" class="btn btn-secondary service-btn">
+                    <i class="fa-solid fa-up-right-from-square"></i> اقرأ الكتاب
+                </a>
+            </div>
         </div>
     </section>
 
@@ -1372,6 +1578,41 @@
     <footer>
         <p>© 2026 Mohamed Ahmed. All rights reserved.</p>
     </footer>
+    <!-- Mobile nav (hamburger) -->
+    <script>
+        (function () {
+            var toggle = document.getElementById('nav-toggle');
+            var nav = document.getElementById('main-nav');
+            var backdrop = document.getElementById('nav-backdrop');
+            if (!toggle || !nav || !backdrop) return;
+
+            function closeMenu() {
+                nav.classList.remove('nav-open');
+                backdrop.classList.remove('active');
+                toggle.querySelector('i').className = 'fa-solid fa-bars';
+            }
+
+            function openMenu() {
+                nav.classList.add('nav-open');
+                backdrop.classList.add('active');
+                toggle.querySelector('i').className = 'fa-solid fa-xmark';
+            }
+
+            toggle.addEventListener('click', function () {
+                if (nav.classList.contains('nav-open')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            backdrop.addEventListener('click', closeMenu);
+            nav.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', closeMenu);
+            });
+        })();
+    </script>
+
     <!-- Light / dark mode toggle -->
     <script>
         (function () {
