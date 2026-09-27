@@ -1,0 +1,3 @@
+# Netlify redirect rule: any deep link under /app/* (e.g. /app/dashboard/expenses)
+# must serve app/index.html so React Router can take over client-side routing.
+/app/*  /app/index.html  200
