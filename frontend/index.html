@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <script>
+        (function () {
+            var saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Ahmed - Portfolio</title>
+    <!-- PWA / Add to Home Screen setup -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon-192.png" type="image/png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Profile">
+    <meta name="theme-color" content="#05070f">
+    <!-- Google Fonts: Poppins (display) + Inter (body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 1. الألوان والتأثيرات الحديثة (Cyber-Luxury Style) --- */
+        :root {
+            --bg-color: #05070f; /* خلفية ليلية شديدة التباين */
+            --bg-rgb: 5, 7, 15;
+            --surface-rgb: 255, 255, 255;
+            --card-bg: rgba(var(--surface-rgb), 0.02);
+            --border-color: rgba(var(--surface-rgb), 0.05);
+            --primary-color: #a855f7; /* بنفسجي كهربائي */
+            --secondary-color: #06b6d4; /* سماوي نيوني مضيء */
+            --accent-gold: #f59e0b; /* ذهبي دافئ فاخر */
+            --text-color: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        /* --- Light mode overrides --- */
+        :root[data-theme="light"] {
+            --bg-color: #f5f6fb;
+            --bg-rgb: 245, 246, 251;
+            --surface-rgb: 15, 15, 25;
+            --card-bg: rgba(var(--surface-rgb), 0.035);
+            --border-color: rgba(var(--surface-rgb), 0.1);
+            --text-color: #14161f;
+            --text-muted: #4b4f5e;
+        }
+
+        :root[data-theme="light"] .bg-glows {
+            opacity: 0.6;
+        }
+
+        :root[data-theme="light"] .glow-1,
+        :root[data-theme="light"] .glow-2,
+        :root[data-theme="light"] .glow-3 {
+            opacity: 0.16;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .logo, .btn, .hero-badge, nav a {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* جزيئات الخلفية المضيئة بتموجات معقدة */
+        .bg-glows {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .glow-1, .glow-2, .glow-3 {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(160px);
+            opacity: 0.12;
+            animation: floatGlow 20s infinite alternate ease-in-out;
+        }
+
+        .glow-1 {
+            background: var(--primary-color);
+            width: 600px;
+            height: 600px;
+            top: -15%;
+            left: -10%;
+        }
+
+        .glow-2 {
+            background: var(--secondary-color);
+            width: 500px;
+            height: 500px;
+            bottom: -10%;
+            right: -5%;
+            animation-delay: 4s;
+        }
+
+        .glow-3 {
+            background: var(--accent-gold);
+            width: 400px;
+            height: 400px;
+            top: 40%;
+            left: 40%;
+            animation-delay: 8s;
+            opacity: 0.06;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(80px, 40px) scale(1.15) rotate(180deg); }
+            100% { transform: translate(-40px, 80px) scale(0.9) rotate(360deg); }
+        }
+
+        /* --- 2. شريط التنقل الزجاجي المتطور (Glassmorphism Navbar) --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(var(--bg-rgb), 0.75);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 8px 0;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: rgba(var(--surface-rgb), 0.04);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .login-icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: rgba(var(--surface-rgb), 0.04);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .login-icon-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* --- Mobile nav (hamburger) --- */
+        .nav-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(var(--surface-rgb), 0.04);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .nav-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* --- 3. الأقسام العامة --- */
+        section {
+            padding: 140px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .section-title span {
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
+        }
+
+        /* --- 4. قسم الرئيسية (السيرة الذاتية لـ Mohamed Ahmed) --- */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .hero-content {
+            flex: 1.2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(168, 85, 247, 0.08);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            color: #d8b4fe;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-badge i {
+            color: var(--secondary-color);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.15;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(45deg, var(--text-color), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h2 {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            max-width: 650px;
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        /* حاوية الأزرار وروابط السوشيال ميديا */
+        .action-area {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            box-shadow: 0 4px 25px rgba(168, 85, 247, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.55);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            background: rgba(var(--surface-rgb), 0.01);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(var(--surface-rgb), 0.05);
+            border-color: var(--secondary-color);
+            transform: translateY(-4px);
+        }
+
+        /* --- الأيقونات الاجتماعية الفاخرة --- */
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(var(--surface-rgb), 0.02);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* تأثيرات الألوان والتحليق الفريدة لكل منصة */
+        .social-icon.whatsapp:hover {
+            background: #25d366;
+            color: #fff;
+            border-color: #25d366;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+            transform: translateY(-5px) rotate(-8deg);
+        }
+
+        .social-icon.youtube:hover {
+            background: #ff0000;
+            color: #fff;
+            border-color: #ff0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            transform: translateY(-5px) rotate(-8deg);
+        }
+
+        .social-icon.instagram:hover {
+            background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(238, 42, 123, 0.5);
+            transform: translateY(-5px) rotate(8deg);
+        }
+
+        .social-icon.github:hover {
+            background: #24292e;
+            color: #fff;
+            border-color: #24292e;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* حاوية الصورة وتطابقها التام مع الإطار */
+        .hero-image-container {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 360px;
+            height: 360px;
+        }
+
+        .frame-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 1;
+            animation: pulseFrame 4s infinite alternate ease-in-out;
+        }
+
+        .personal-photo-nested {
+            position: absolute;
+            width: 73%;
+            height: 73%;
+            object-fit: cover;
+            border-radius: 50%;
+            z-index: 2;
+            top: 13.5%;
+            left: 13.5%;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .hero-image-container:hover .personal-photo-nested {
+            transform: scale(1.06) rotate(3deg);
+        }
+
+        @keyframes pulseFrame {
+            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.25)); }
+            100% { transform: scale(1.04); filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.5)); }
+        }
+
+        /* --- 5. قسم المهارات (About) بطاقات تفاعلية متوهجة --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px 30px;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(6, 182, 212, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.1);
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        .skill-icon {
+            width: 65px;
+            height: 65px;
+            background: rgba(var(--surface-rgb), 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .skill-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .skill-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .skill-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* --- 5.1. تصغير قسم المهارات تحديدًا --- */
+        #about {
+            min-height: auto;
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        #about .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        #about .skills-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        #about .skill-card {
+            padding: 20px 16px;
+        }
+
+        #about .skill-icon {
+            width: 42px;
+            height: 42px;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            border-radius: 12px;
+        }
+
+        #about .skill-card h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        #about .skill-card p {
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* --- 6. قسم كروت المشاريع (Projects Section) --- */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .product-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(6, 182, 212, 0.15);
+        }
+
+        .product-image-placeholder {
+            height: 280px;
+            background: linear-gradient(135deg, #090d16, #111827);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .product-image-placeholder i {
+            font-size: 5.5rem;
+            color: rgba(var(--surface-rgb), 0.06);
+            transition: all 0.4s ease;
+        }
+
+        .product-card:hover .product-image-placeholder i {
+            color: var(--secondary-color);
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--secondary-color);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-category {
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-color);
+        }
+
+        .buy-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .buy-btn {
+            background: var(--secondary-color);
+            color: #000;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        /* --- 6.3. Tech Stack section --- */
+        .stack-category {
+            margin-bottom: 45px;
+        }
+
+        .stack-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .stack-category-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stack-category-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 18px;
+        }
+
+        .stack-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-align: center;
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .stack-item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .stack-item i {
+            font-size: 1.9rem;
+            color: var(--secondary-color);
+            transition: all 0.35s ease;
+        }
+
+        .stack-item:hover i {
+            color: var(--primary-color);
+            transform: scale(1.15);
+        }
+
+        .stack-item span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .stack-more {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* --- 6.4. Programming projects section --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.1);
+        }
+
+        .project-icon {
+            width: 55px;
+            height: 55px;
+            background: rgba(var(--surface-rgb), 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: var(--primary-color);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .project-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .project-link-btn.github:hover {
+            background: #24292e;
+            border-color: #24292e;
+            color: #fff;
+        }
+
+        .project-link-btn.live {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: #000;
+        }
+
+        .project-link-btn.live:hover {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+        }
+
+        .projects-more {
+            text-align: center;
+            margin-top: 45px;
+        }
+
+        /* --- 6.4.1 قسم الخدمات (استشارة + كتاب) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.12);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(6, 182, 212, 0.15));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            flex-grow: 1;
+        }
+
+        .service-price {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-price span {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .service-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* --- 6.5. قسم التواصل --- */
+        .contact-section {
+            min-height: auto;
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .contact-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 60px 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
+            margin-bottom: 25px;
+        }
+
+        .contact-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .contact-whatsapp-btn {
+            background: linear-gradient(45deg, #25d366, #06b6d4);
+            box-shadow: 0 4px 25px rgba(37, 211, 102, 0.35);
+        }
+
+        /* --- 7. التذييل --- */
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 100px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- 8. التوافق المتقدم مع الشاشات --- */
+        @media (max-width: 968px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .action-area {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-image-container {
+                width: 300px;
+                height: 300px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* --- 8.1 قائمة الموبايل (Hamburger) --- */
+        @media (max-width: 860px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: min(78vw, 320px);
+                background: rgba(8, 10, 20, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-left: 1px solid var(--border-color);
+                padding: 100px 30px 40px;
+                transition: right 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+                box-shadow: -20px 0 50px rgba(0, 0, 0, 0.4);
+            }
+
+            :root[data-theme='light'] nav {
+                background: rgba(255, 255, 255, 0.98);
+            }
+
+            nav.nav-open {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 28px;
+            }
+
+            nav a {
+                font-size: 1.1rem;
+            }
+
+            .services-grid {
+                gap: 24px;
+            }
+        }
+
+        /* --- 9. ضبط دقيق لمقاسات الموبايل --- */
+        @media (max-width: 600px) {
+            .nav-container {
+                padding: 14px 16px;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            nav ul {
+                gap: 16px;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .nav-right {
+                gap: 12px;
+            }
+
+            .theme-toggle,
+            .login-icon-btn,
+            .nav-toggle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+
+            section {
+                padding: 110px 16px 60px;
+                min-height: auto;
+            }
+
+            .section-title {
+                font-size: 1.9rem;
+                margin-bottom: 35px;
+            }
+
+            .hero-badge {
+                font-size: 0.75rem;
+                padding: 7px 14px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+
+            .hero h2 {
+                font-size: 1.1rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+                text-align: center;
+                line-height: 1.7;
+            }
+
+            .hero-image-container {
+                width: 220px;
+                height: 220px;
+                margin-bottom: 15px;
+            }
+
+            .action-area {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 13px 20px;
+                font-size: 0.95rem;
+            }
+
+            .social-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            #about {
+                padding-top: 100px;
+                padding-bottom: 25px;
+            }
+
+            #about .section-title {
+                font-size: 1.4rem;
+                margin-bottom: 20px;
+            }
+
+            #about .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            #about .skill-card {
+                padding: 14px 10px;
+            }
+
+            #about .skill-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+
+            #about .skill-card h3 {
+                font-size: 0.8rem;
+            }
+
+            #about .skill-card p {
+                display: none;
+            }
+
+            .skill-card {
+                padding: 28px 22px;
+            }
+
+            .skill-icon {
+                width: 55px;
+                height: 55px;
+                font-size: 1.6rem;
+                margin-bottom: 18px;
+            }
+
+            .skill-card h3 {
+                font-size: 1.2rem;
+            }
+
+            footer {
+                padding: 35px 16px;
+                margin-top: 60px;
+                font-size: 0.85rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .stack-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .stack-item {
+                padding: 18px 8px;
+            }
+
+            .stack-item i {
+                font-size: 1.5rem;
+            }
+
+            .stack-item span {
+                font-size: 0.7rem;
+            }
+
+            .stack-category-title {
+                font-size: 1rem;
+            }
+
+            .project-card {
+                padding: 28px 22px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .service-card {
+                padding: 28px 22px;
+            }
+
+            .service-price {
+                font-size: 1.5rem;
+            }
+
+            .contact-box {
+                padding: 40px 20px;
+            }
+
+            .contact-photo {
+                width: 90px;
+                height: 90px;
+            }
+
+            .contact-whatsapp-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient background glows -->
+    <div class="bg-glows">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+        <div class="glow-3"></div>
+    </div>
+
+    <!-- Navigation bar -->
+    <header>
+        <div class="nav-container">
+            <a href="#home" class="logo">Mohamed</a>
+            <div class="nav-right">
+                <nav id="main-nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">Skills</a></li>
+                        <li><a href="#services">My Services</a></li>
+                        <li><a href="https://soalect.vercel.app/" target="_blank">My Store</a></li>
+                    </ul>
+                </nav>
+                <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light / dark mode">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+                <a href="/app/login" class="login-icon-btn" title="تسجيل الدخول" aria-label="Login">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+                <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div id="nav-backdrop" class="nav-backdrop"></div>
+
+    <!-- Hero section (profile & social links) -->
+    <section id="home">
+        <div class="hero">
+            <div class="hero-content">
+                <span class="hero-badge"><i class="fa-solid fa-gem"></i> Back-end & Full-Stack Developer | Project Manager</span>
+                <h1>I'm <span>Mohamed Ahmed</span></h1>
+                <h2>Driven by excellence, always chasing the next goal</h2>
+                <p>IT student at Borg El Arab University, specialized in building robust and reliable web applications. I don't settle for average — I set my goals and push until I hit them, blending strong <strong>project management</strong> skills with technical and creative execution to build projects that leave a real impact.</p>
+                
+                <!-- Buttons and social links -->
+                <div class="action-area">
+                    <div class="hero-buttons">
+                        <a href="https://soalect.vercel.app/" target="_blank" class="btn btn-primary">Browse Store <i class="fa-solid fa-bag-shopping"></i></a>
+                        <a href="Mohamed_Ahmed_CV.pdf" download class="btn btn-secondary">Download CV <i class="fa-solid fa-file-arrow-down"></i></a>
+                    </div>
+                    <!-- Social icons -->
+                    <div class="social-links">
+                        <a href="https://wa.me/201200757959" target="_blank" class="social-icon whatsapp" title="Message me on WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@Mohamed-office12" target="_blank" class="social-icon youtube" title="My YouTube channel">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="https://www.instagram.com/mohamed_ahmed7_6?igsh=aWlkZjdmMHk1Zzhp" target="_blank" class="social-icon instagram" title="My Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/mohamedahmed878" target="_blank" class="social-icon github" title="My GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile photo -->
+            <div class="hero-image-container">
+                <img src="٢٠٢٦٠٦١٤_٢٢٣٢٤٦.jpg" alt="Mohamed Ahmed" class="personal-photo-nested">
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills / About section -->
+    <section id="about">
+        <h2 class="section-title">My Professional <span>Background</span></h2>
+        <div class="skills-grid">
+            <a href="https://soalect.vercel.app/" target="_blank" class="skill-card skill-card-link">
+                <div class="skill-icon"><i class="fa-solid fa-list-check"></i></div>
+                <h3>Project Management</h3>
+                <p>Leading teams, scheduling tasks, and tracking goals to deliver projects efficiently and on time.</p>
+            </a>
+            <a href="#tech-stack" class="skill-card skill-card-link">
+                <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
+                <h3>Programming (Full-Stack)</h3>
+                <p>Building complete systems with React, Node.js, and MongoDB — from the interface to the database, like the e-commerce store I'm developing now.</p>
+            </a>
+            <a href="https://www.youtube.com/@Mohamed-office12" target="_blank" class="skill-card skill-card-link">
+                <div class="skill-icon"><i class="fa-solid fa-clapperboard"></i></div>
+                <h3>Video Editing & Content</h3>
+                <p>Editing videos and creating content (YouTube & social media) that tells a clear story, from concept to final cut.</p>
+            </a>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                <h3>Marketing & Sales</h3>
+                <p>Proactive, well-planned strategies to boost sales and grow the clothing store's audience significantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack section -->
+    <section id="tech-stack">
+        <h2 class="section-title">Tech <span>Stack</span></h2>
+
+        <div class="stack-category">
+            <div class="stack-category-title">Frontend</div>
+            <div class="stack-grid">
+                <div class="stack-item"><i class="fa-brands fa-react"></i><span>React</span></div>
+                <div class="stack-item"><i class="fa-brands fa-js"></i><span>JavaScript</span></div>
+                <div class="stack-item"><i class="fa-brands fa-html5"></i><span>HTML5</span></div>
+                <div class="stack-item"><i class="fa-solid fa-wind"></i><span>Tailwind CSS</span></div>
+            </div>
+        </div>
+
+        <div class="stack-category">
+            <div class="stack-category-title">Backend & Data</div>
+            <div class="stack-grid">
+                <div class="stack-item"><i class="fa-brands fa-python"></i><span>Python</span></div>
+                <div class="stack-item"><i class="fa-solid fa-database"></i><span>SQL</span></div>
+                <div class="stack-item"><i class="fa-solid fa-leaf"></i><span>MongoDB</span></div>
+            </div>
+        </div>
+
+        <div class="stack-category">
+            <div class="stack-category-title">Tools & Platforms</div>
+            <div class="stack-grid">
+                <div class="stack-item"><i class="fa-brands fa-github"></i><span>GitHub</span></div>
+                <div class="stack-item"><i class="fa-brands fa-git-alt"></i><span>Git</span></div>
+                <div class="stack-item"><i class="fa-brands fa-linux"></i><span>Linux</span></div>
+            </div>
+        </div>
+
+        <div class="stack-category">
+            <div class="stack-category-title">Other</div>
+            <div class="stack-grid">
+                <div class="stack-item"><i class="fa-solid fa-microchip"></i><span>IoT</span></div>
+            </div>
+        </div>
+
+        <div class="stack-more">
+            <a href="#projects" class="btn btn-secondary"><i class="fa-solid fa-folder-open"></i> See My Projects</a>
+        </div>
+    </section>
+
+    <!-- Programming projects section -->
+    <section id="projects">
+        <h2 class="section-title">Programming <span>Projects</span></h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                <h3>E-Commerce Store</h3>
+                <p>An e-commerce store for a streetwear clothing brand, built with React, Node.js, and MongoDB, with a full admin dashboard.</p>
+                <div class="project-tags">
+                    <span class="project-tag">React</span>
+                    <span class="project-tag">Node.js</span>
+                    <span class="project-tag">Express</span>
+                    <span class="project-tag">MongoDB</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/mohamedahmed878" target="_blank" class="project-link-btn github"><i class="fa-brands fa-github"></i> Code</a>
+                    <a href="https://soalect.vercel.app/" target="_blank" class="project-link-btn live"><i class="fa-solid fa-up-right-from-square"></i> Live Demo</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-icon"><i class="fa-solid fa-mug-hot"></i></div>
+                <h3>Cafe</h3>
+                <p>A cafe website (Coffee Break) with an interactive drinks menu, built with JavaScript.</p>
+                <div class="project-tags">
+                    <span class="project-tag">HTML5</span>
+                    <span class="project-tag">CSS3</span>
+                    <span class="project-tag">JavaScript</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/mohamedahmed878/cafe" target="_blank" class="project-link-btn github"><i class="fa-brands fa-github"></i> Code</a>
+                    <a href="https://cafe-wheat-one.vercel.app/" target="_blank" class="project-link-btn live"><i class="fa-solid fa-up-right-from-square"></i> Live Demo</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-icon"><i class="fa-solid fa-list-check"></i></div>
+                <h3>Task Dashboard</h3>
+                <p>A task management dashboard for organizing and tracking work items.</p>
+                <div class="project-tags">
+                    <span class="project-tag">JavaScript</span>
+                    <span class="project-tag">HTML5</span>
+                    <span class="project-tag">CSS3</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/mohamedahmed878" target="_blank" class="project-link-btn github"><i class="fa-brands fa-github"></i> Code</a>
+                    <a href="https://task-f8z5.vercel.app/" target="_blank" class="project-link-btn live"><i class="fa-solid fa-up-right-from-square"></i> Live Demo</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-icon"><i class="fa-solid fa-share-nodes"></i></div>
+                <h3>Social Media App</h3>
+                <p>منصة تواصل اجتماعي (Social Media App) — TODO: اكتب هنا وصف سطر أو اتنين عن المشروع والتقنيات المستخدمة فيه بالظبط.</p>
+                <div class="project-tags">
+                    <span class="project-tag">React</span>
+                    <span class="project-tag">Node.js</span>
+                    <span class="project-tag">MongoDB</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/mohamedahmed878" target="_blank" class="project-link-btn github"><i class="fa-brands fa-github"></i> Code</a>
+                    <a href="https://social-media-psi-hazel.vercel.app/" target="_blank" class="project-link-btn live"><i class="fa-solid fa-up-right-from-square"></i> Live Demo</a>
+                </div>
+            </div>
+        </div>
+        <div class="projects-more">
+            <a href="https://github.com/mohamedahmed878" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> See All Projects on GitHub</a>
+        </div>
+    </section>
+
+    <!-- Services: consultation + book -->
+    <section id="services">
+        <h2 class="section-title">My <span>Services</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-comments"></i></div>
+                <h3>استشارة عامة</h3>
+                <p>جلسة استشارة فردية معايا (حوالي 30-45 دقيقة) — مش لازم تكون برمجة بس. سواء عندك فكرة مشروع، قرار مهني محتاج فيه رأي تاني، مشكلة تقنية، أو حتى محتاج تنظّم أفكارك وتطلع بخطة واضحة، هقعد معاك نراجعها مع بعض ونوصل لخطوات عملية تقدر تنفذها فورًا.</p>
+                <div class="project-tags" style="justify-content: center; margin-bottom: 18px;">
+                    <span class="project-tag">مشاريع برمجية</span>
+                    <span class="project-tag">قرارات مهنية</span>
+                    <span class="project-tag">تطوير ذاتي</span>
+                </div>
+                <div class="service-price">250 <span>EGP</span></div>
+                <a href="https://wa.me/201200757959?text=مرحبًا%20محمد%2C%20عايز%20أحجز%20استشارة%20عامة" target="_blank" class="btn btn-primary service-btn">
+                    <i class="fa-brands fa-whatsapp"></i> احجز استشارتك
+                </a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-book-open"></i></div>
+                <h3>لتغيّر حياتك في 90 يوم</h3>
+                <p>A Transformative Journey in 90 Days — دليلك لتطوير حياتك خطوة بخطوة خلال 90 يوم.</p>
+                <a href="https://a-transformative-journey-in-90-days.vercel.app/" target="_blank" class="btn btn-secondary service-btn">
+                    <i class="fa-solid fa-up-right-from-square"></i> اقرأ الكتاب
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-box">
+            <img src="٢٠٢٦٠٦١٤_٢٢٣٢٤٦.jpg" alt="Mohamed Ahmed" class="contact-photo">
+            <h2 class="section-title" style="margin-bottom: 15px;">Get In <span>Touch</span></h2>
+            <p class="contact-text">Got a question or a project idea? Reach out to me directly on WhatsApp.</p>
+            <a href="https://wa.me/201200757959" target="_blank" class="btn btn-primary contact-whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i> Message me on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Mohamed Ahmed. All rights reserved.</p>
+    </footer>
+    <!-- Mobile nav (hamburger) -->
+    <script>
+        (function () {
+            var toggle = document.getElementById('nav-toggle');
+            var nav = document.getElementById('main-nav');
+            var backdrop = document.getElementById('nav-backdrop');
+            if (!toggle || !nav || !backdrop) return;
+
+            function closeMenu() {
+                nav.classList.remove('nav-open');
+                backdrop.classList.remove('active');
+                toggle.querySelector('i').className = 'fa-solid fa-bars';
+            }
+
+            function openMenu() {
+                nav.classList.add('nav-open');
+                backdrop.classList.add('active');
+                toggle.querySelector('i').className = 'fa-solid fa-xmark';
+            }
+
+            toggle.addEventListener('click', function () {
+                if (nav.classList.contains('nav-open')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            backdrop.addEventListener('click', closeMenu);
+            nav.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', closeMenu);
+            });
+        })();
+    </script>
+
+    <!-- Light / dark mode toggle -->
+    <script>
+        (function () {
+            var root = document.documentElement;
+            var btn = document.getElementById('theme-toggle');
+            var icon = btn.querySelector('i');
+            var metaTheme = document.querySelector('meta[name="theme-color"]');
+
+            function applyIcon() {
+                var isLight = root.getAttribute('data-theme') === 'light';
+                icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+                if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f5f6fb' : '#05070f');
+            }
+
+            btn.addEventListener('click', function () {
+                var isLight = root.getAttribute('data-theme') === 'light';
+                if (isLight) {
+                    root.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    root.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+                applyIcon();
+            });
+
+            applyIcon();
+        })();
+    </script>
+
+</body>
+</html>
